@@ -12728,7 +12728,7 @@ function setup(options) {
 
   let soundBodies = [
     Bodies.circle(200, 250, 20, {
-      restitution: 0.8,
+      restitution: 1,
       friction: 0,
       frictionAir: 0,
       frictionStatic: 0,
@@ -12740,7 +12740,7 @@ function setup(options) {
       }
     }),
     Bodies.circle(400, 250, 20, {
-      restitution: 0.8,
+      restitution: 1,
       friction: 0,
       frictionAir: 0,
       frictionStatic: 0,
@@ -12752,7 +12752,7 @@ function setup(options) {
       }
     }),
     Bodies.circle(600, 250, 20, {
-      restitution: 0.8,
+      restitution: 1,
       friction: 0,
       frictionAir: 0,
       frictionStatic: 0,
@@ -12764,7 +12764,7 @@ function setup(options) {
       }
     }),
     Bodies.circle(600, 250, 20, {
-      restitution: 0.8,
+      restitution: 1,
       friction: 0,
       frictionAir: 0,
       frictionStatic: 0,
