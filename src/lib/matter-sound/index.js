@@ -104,14 +104,26 @@ MatterSound.prototype.initEngine = function (engine) {
 	  //   		volume: volume
 	  //   	})
 			// }
-
-
+			
+			if (pair.bodyA.plugin.sound.selfOnly) {
+	    	this.playBodyAudio(pair.bodyA, {
+	    		volume: 1
+	    	})
+			} else if (pair.bodyB.plugin.sound.selfOnly) {
+	    	this.playBodyAudio(pair.bodyB, {
+	    		volume: 1
+	    	})
+			} else {
 	    	this.playBodyAudio(pair.bodyA, {
 	    		volume: 1
 	    	})
 	    	this.playBodyAudio(pair.bodyB, {
 	    		volume: 1
 	    	})
+			}
+
+
+
 
 
       // pair.bodyA.previousFillStyle = pair.bodyA.render.fillStyle

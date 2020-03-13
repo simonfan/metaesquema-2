@@ -12547,9 +12547,10 @@ function setup(options) {
   	engine: engine,
   	options: {
   		wireframes: false,
+      // showPositions: true,
       // showAngleIndicator: true,
   		background: '#1BA158',
-  		pixelRatio: 2,
+  		pixelRatio: 1,
 
   		width: CANVAS_WIDTH,
   		height: CANVAS_HEIGHT,
@@ -12661,7 +12662,7 @@ function setup(options) {
   // add rotation
   Events.on(engine, 'beforeUpdate', (event) => {
     Body.rotate(rotatingRectangles[0], 0.06)
-    Body.rotate(rotatingRectangles[1], 0.03)
+    Body.rotate(rotatingRectangles[1], -0.03)
   })
 
   /**
@@ -12669,7 +12670,7 @@ function setup(options) {
    * @type {[type]}
    */
   let sensors = [
-    Bodies.rectangle(100, 400, 10, 10, {
+    Bodies.rectangle(CANVAS_WIDTH / 3, CANVAS_HEIGHT * 1.25 / 2, 10, 10, {
       isSensor: true,
       isStatic: false,
       render: {
@@ -12678,7 +12679,7 @@ function setup(options) {
         strokeStyle: '#FFFFFF'
       },
     }),
-    Bodies.rectangle(100, 400, 10, 10, {
+    Bodies.rectangle(CANVAS_WIDTH * 2 / 3, CANVAS_HEIGHT * 1.25 / 2, 10, 10, {
       isSensor: true,
       isStatic: false,
       render: {
@@ -12736,7 +12737,10 @@ function setup(options) {
       density: 0.0001,
       inertia: Infinity,
       plugin: {
-        sound: { audio: 'bola-01' },
+        sound: {
+          audio: 'bola-01',
+          selfOnly: true
+        },
       }
     }),
     Bodies.circle(400, 250, 20, {
@@ -12748,7 +12752,10 @@ function setup(options) {
       density: 0.0001,
       inertia: Infinity,
       plugin: {
-        sound: { audio: 'bola-02' },
+        sound: {
+          audio: 'bola-02',
+          selfOnly: true
+        },
       }
     }),
     Bodies.circle(600, 250, 20, {
@@ -12760,7 +12767,10 @@ function setup(options) {
       density: 0.0001,
       inertia: Infinity,
       plugin: {
-        sound: { audio: 'bola-02B' },
+        sound: {
+          audio: 'bola-02B',
+          selfOnly: true
+        },
       }
     }),
     Bodies.circle(600, 250, 20, {
@@ -12772,7 +12782,10 @@ function setup(options) {
       density: 0.0001,
       inertia: Infinity,
       plugin: {
-        sound: { audio: 'bola-03' },
+        sound: {
+          audio: 'bola-03',
+          selfOnly: true
+        },
       }
     }),
 
@@ -12828,10 +12841,16 @@ matterSound.ready.then(() => {
 	}
 
 	let app = setup(config)
+
+  let mousePositionElement = document.querySelector('#mouse-position')
+  document.querySelector('body').addEventListener('mousemove', e => {
+    mousePositionElement.innerHTML = `${e.clientX}x${e.clientY}`
+  })
 })
 .catch(err => {
   console.warn(err)
 })
+
 },{"./audios":6,"./lib/matter-collision-styles":8,"./lib/matter-sound":10,"matter-js":5}],8:[function(require,module,exports){
 const clone = require('clone')
 
@@ -13045,14 +13064,26 @@ MatterSound.prototype.initEngine = function (engine) {
 	  //   		volume: volume
 	  //   	})
 			// }
-
-
+			
+			if (pair.bodyA.plugin.sound.selfOnly) {
+	    	this.playBodyAudio(pair.bodyA, {
+	    		volume: 1
+	    	})
+			} else if (pair.bodyB.plugin.sound.selfOnly) {
+	    	this.playBodyAudio(pair.bodyB, {
+	    		volume: 1
+	    	})
+			} else {
 	    	this.playBodyAudio(pair.bodyA, {
 	    		volume: 1
 	    	})
 	    	this.playBodyAudio(pair.bodyB, {
 	    		volume: 1
 	    	})
+			}
+
+
+
 
 
       // pair.bodyA.previousFillStyle = pair.bodyA.render.fillStyle
